@@ -18,7 +18,6 @@ function ExecuteStoredProcedureWithParams(sp, parameters, callback) {
                 callback(err);
             }
             else {
-                console.log(recordSet);
                 callback(null, recordSet);
             }
         });

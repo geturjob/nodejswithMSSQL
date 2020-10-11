@@ -1,7 +1,8 @@
-var sql = require("mssql");
+var sql = require("mssql/msnodesqlv8");
 
 var config = {
     server: 'LAPTOP-71T710CI\\SQLEXPRESS',
+    driver: 'msnodesqlv8',
     database: 'WebPortal',
     user: 'somnath',
     password: 'somnath123',

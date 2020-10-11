@@ -1,10 +1,11 @@
 var express = require("express");
 var dbcontext = require('../database/dbcontext');
+var jwt = require('jsonwebtoken');
 
 function getAllSiteUsers(req, res) {
     dbcontext.spWithoutParams('SP_GetAllSiteUser', function (err, data) {
         if (err) {
-            console.log(err);
+            res.sendStatus(500);
         }
         else {
             return res.json(data);
@@ -17,7 +18,7 @@ function getSiteUserBySiteUserID(req, res) {
     params.push({ name: 'siteUserId', value: req.params.siteUserId });
     dbcontext.spWithParams('sp_GetSiteUserByID', params, function (err, data) {
         if (err) {
-            console.log(err);
+            res.sendStatus(500);
         }
         else {
             return res.json(data);
@@ -29,7 +30,7 @@ function getSiteUserBySiteUserID(req, res) {
 function getAllActiveSiteUsers(req, res) {
     dbcontext.spWithoutParams('[dbo].[SaveSiteUserDetails]', function (err, data) {
         if (err) {
-            console.log(err);
+            res.sendStatus(500);
         }
         else {
             var finalArray = [];
@@ -51,7 +52,7 @@ function SaveSiteUserDetails(req, res) {
     params.push({ name: 'password', value: req.params.password });
     dbcontext.spWithParams('sp_saveSiteUserDetails', params, function (err, data) {
         if (err) {
-            console.log(err);
+            res.sendStatus(500);
         }
         else {
             return res.json(data);

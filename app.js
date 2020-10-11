@@ -3,17 +3,27 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
+
+let port = process.env.PORT || 3000;
 
 var indexRouter = require('./routes/index')();
 var connect = require('./database/dbconnection');
 var app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
+
+app.listen(port, ()=>{
+  console.log('App is listening');
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -28,7 +38,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json(err);
 });
 
 module.exports = app;
